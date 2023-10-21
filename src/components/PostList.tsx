@@ -37,30 +37,39 @@ export default function PostList() {
             {isEditing(post.id) ? (
               <>
                 <div className="mb-2">
-                  <label className="block mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={editedTitle}
-                    onChange={(e) => setEditedTitle(e.target.value)}
-                    className="border rounded px-2 py-1 w-full"
-                  />
+                  <label htmlFor="postlisttitle" className="block mb-1">
+                    Title
+                    <input
+                      type="text"
+                      id="postlisttitle"
+                      value={editedTitle}
+                      onChange={(e) => setEditedTitle(e.target.value)}
+                      className="border rounded px-2 py-1 w-full"
+                    />
+                  </label>
                 </div>
                 <div className="mb-2">
-                  <label className="block mb-1">Description</label>
-                  <textarea
-                    value={editedDescription}
-                    onChange={(e) => setEditedDescription(e.target.value)}
-                    className="border rounded px-2 py-1 w-full"
-                  />
+                  <label htmlFor="postlistdesc" className="block mb-1">
+                    Description
+                    <textarea
+                      value={editedDescription}
+                      id="postlistdesc"
+                      onChange={(e) => setEditedDescription(e.target.value)}
+                      className="border rounded px-2 py-1 w-full"
+                    />
+                  </label>
                 </div>
                 <div className="mb-2">
-                  <label className="block mb-1">Image URL</label>
-                  <input
-                    type="text"
-                    value={editedImage}
-                    onChange={(e) => setEditedImage(e.target.value)}
-                    className="border rounded px-2 py-1 w-full"
-                  />
+                  <label htmlFor="postlistimgurl" className="block mb-1">
+                    Image URL
+                    <input
+                      type="text"
+                      id="postlistimgurl"
+                      value={editedImage}
+                      onChange={(e) => setEditedImage(e.target.value)}
+                      className="border rounded px-2 py-1 w-full"
+                    />
+                  </label>
                 </div>
                 <button
                   onClick={() => handleSavePostEdit(post.id)}
