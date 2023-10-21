@@ -1,0 +1,106 @@
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectPosts, deletePost, updatePost } from '../features/postsSlice';
+
+export default function PostList() {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPosts);
+  const [editPostId, setEditPostId] = useState(null);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
+  const [editedImage, setEditedImage] = useState('');
+
+  const handleDeletePost = (postId) => {
+    dispatch(deletePost(postId));
+  };
+
+  const handleEditPost = (postId, title, description, image) => {
+    setEditPostId(postId);
+    setEditedTitle(title);
+    setEditedDescription(description);
+    setEditedImage(image);
+  };
+
+  const handleSavePostEdit = (postId) => {
+    dispatch(updatePost({ id: postId, title: editedTitle, description: editedDescription, image: editedImage }));
+    setEditPostId(null);
+  };
+
+  const isEditing = (postId) => editPostId === postId;
+
+  return (
+    <div className="bg-gray-100 p-4 rounded-lg">
+      <h2 className="text-3xl font-bold mb-2">Posts</h2>
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id} className="mb-4">
+            {isEditing(post.id) ? (
+              <>
+                <div className="mb-2">
+                  <label className="block mb-1">Title</label>
+                  <input
+                    type="text"
+                    value={editedTitle}
+                    onChange={(e) => setEditedTitle(e.target.value)}
+                    className="border rounded px-2 py-1 w-full"
+                  />
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">Description</label>
+                  <textarea
+                    value={editedDescription}
+                    onChange={(e) => setEditedDescription(e.target.value)}
+                    className="border rounded px-2 py-1 w-full"
+                  />
+                </div>
+                <div className="mb-2">
+                  <label className="block mb-1">Image URL</label>
+                  <input
+                    type="text"
+                    value={editedImage}
+                    onChange={(e) => setEditedImage(e.target.value)}
+                    className="border rounded px-2 py-1 w-full"
+                  />
+                </div>
+                <button
+                  onClick={() => handleSavePostEdit(post.id)}
+                  type="button"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditPostId(null)}
+                  type="button"
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold mb-1">{post.title}</h3>
+                <p className="mb-2">{post.description}</p>
+                <img src={post.image} alt="" className="mb-2" />
+                <button
+                  onClick={() => handleDeletePost(post.id)}
+                  type="button"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => handleEditPost(post.id, post.title, post.description, post.image)}
+                  type="button"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  Edit
+                </button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
