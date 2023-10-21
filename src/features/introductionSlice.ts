@@ -22,5 +22,5 @@ const introductionSlice = createSlice({
 });
 
 export const { updateIntroduction } = introductionSlice.actions;
-export const selectIntroduction = (state: any) => state.introduction;
+export const selectIntroduction = (state: { introduction: IntroductionState }) => state.introduction;
 export default introductionSlice.reducer;

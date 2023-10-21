@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import { addPost } from '../features/postsSlice';
+
 
 export default function PostForm() {
   const dispatch = useDispatch();
+  const id = uuidv4();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
@@ -11,7 +14,7 @@ export default function PostForm() {
 
   const handleAddPost = () => {
     if (title && description && image) {
-      dispatch(addPost({ title, description, image }));
+      dispatch(addPost({ id, title, description, image }));
       setTitle('');
       setDescription('');
       setImage('');
